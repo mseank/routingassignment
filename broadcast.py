@@ -40,9 +40,9 @@ class BroadcastApp(object):
         print(packet.body)
         vector_list = packet.body
         for k, v in vector_list.items():
-            if k in self.distance_vectors:
-            	print("test")
-            else:
+            if k in self.distance_vectors and int(v) <= (int(self.distance_vectors[k])-2):
+            	self.distance_vectors[k] = int(v)+1
+            elif k not in self.distance_vectors:
             	self.distance_vectors[k] = int(v)+1
         if not self.timer:
             self.timer = Sim.scheduler.add(delay=self.timeout, event='broadcast', handler=self.broadcast)
